@@ -40,7 +40,7 @@ export default function RootLayout({
         <nav className="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-hairline">
           <div className="max-w-[1280px] mx-auto px-8 h-16 flex items-center justify-between">
             {/* Left: Logo */}
-            <div className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
               <div className="w-6 h-6 bg-miro-yellow rounded-sm flex items-center justify-center text-miro-blue">
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
@@ -50,11 +50,11 @@ export default function RootLayout({
               <span className="text-lg font-bold tracking-tight text-miro-blue">
                 SecureVibe
               </span>
-            </div>
+            </Link>
 
             {/* Center: Main Links */}
             <div className="flex items-center gap-6 text-[15px] font-medium text-miro-blue">
-              <Link href="/scan" className="hover:opacity-70 transition-opacity">Scan</Link>
+              <Link href="/" className="hover:opacity-70 transition-opacity">Scan</Link>
               <span className="opacity-20">|</span>
               <Link href="/report" className="hover:opacity-70 transition-opacity">Report</Link>
             </div>

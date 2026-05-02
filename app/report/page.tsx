@@ -1,14 +1,24 @@
 "use client"
 
 import { useScanStore } from "@/store/scanStore"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 import Link from "next/link"
+
 
 export default function ReportPage() {
     const results = useScanStore((state) => state.results)
 
+    const router = useRouter()
     const critical = results.filter(r => r.extra.severity === "ERROR")
     const high = results.filter(r => r.extra.severity === "WARNING")
     const medium = results.filter(r => r.extra.severity === "INFO")
+
+    useEffect(() => {
+        if (results.length === 0) {
+            router.push("/")
+        }
+    }, [results, router])
 
     return (
         <div className="min-h-screen bg-zinc-50/50 flex flex-col font-sans">
@@ -58,18 +68,17 @@ export default function ReportPage() {
                             results.map((result, index) => {
                                 const isCritical = result.extra.severity === "ERROR";
                                 const isHigh = result.extra.severity === "WARNING";
-                                
+
                                 return (
                                     <Link href={`/report/${index}`} key={index} className="block">
                                         <div className="bg-white rounded-[24px] border border-hairline p-6 transition-all hover:border-miro-blue/20 hover:shadow-[0_8px_20px_-4px_rgba(5,0,56,0.06)] hover:translate-y-[-2px] group">
                                             <div className="flex items-start justify-between gap-6">
                                                 <div className="flex-1">
                                                     <div className="flex items-center gap-3 mb-4">
-                                                        <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${
-                                                            isCritical ? 'bg-miro-coral-light text-miro-coral-dark' : 
-                                                            isHigh ? 'bg-miro-yellow-light text-miro-yellow-dark' : 
-                                                            'bg-miro-teal-light text-miro-teal-dark'
-                                                        }`}>
+                                                        <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${isCritical ? 'bg-miro-coral-light text-miro-coral-dark' :
+                                                            isHigh ? 'bg-miro-yellow-light text-miro-yellow-dark' :
+                                                                'bg-miro-teal-light text-miro-teal-dark'
+                                                            }`}>
                                                             {result.extra.severity === "ERROR" ? "Critical" : result.extra.severity === "WARNING" ? "High" : "Medium"}
                                                         </span>
                                                         <span className="text-[13px] font-medium text-slate">
