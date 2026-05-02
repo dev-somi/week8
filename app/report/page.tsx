@@ -4,6 +4,7 @@ import { useScanStore } from "@/store/scanStore"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import { getVulnerabilityInfo } from "@/lib/constants/severityMapping"
 
 
 export default function ReportPage() {
@@ -103,70 +104,77 @@ export default function ReportPage() {
                                 const isCritical = result.extra.severity === "ERROR";
                                 const isHigh = result.extra.severity === "WARNING";
 
+                                // CWE 코드 추출 및 한국어 정보 매핑
+                                const cweRaw = result.extra.metadata.cwe?.[0] ?? ""
+                                const cweCode = cweRaw.split(":")[0].trim()
+                                const vulnInfo = getVulnerabilityInfo(cweCode)
+
                                 // 원본 results 배열에서의 인덱스를 찾아 상세 페이지 이동에 사용
                                 const originalIndex = results.findIndex(r => r === result);
 
-                                return (
-                                    <div
-                                        key={index}
-                                        className="block cursor-pointer"
-                                        onClick={() => {
-                                            setSelectedResult(result)
-                                            router.push(`/report/${originalIndex}`)
-                                        }}
-                                    >
-                                        <div className="bg-white rounded-[24px] border border-hairline p-6 transition-all hover:border-miro-blue/20 hover:shadow-[0_8px_20px_-4px_rgba(5,0,56,0.06)] hover:translate-y-[-2px] group">
-                                            <div className="flex items-start justify-between gap-6">
-                                                <div className="flex-1">
-                                                    <div className="flex items-center gap-3 mb-4">
-                                                        <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${isCritical ? 'bg-miro-coral-light text-miro-coral-dark' :
-                                                            isHigh ? 'bg-miro-yellow-light text-miro-yellow-dark' :
-                                                                'bg-miro-teal-light text-miro-teal-dark'
-                                                            }`}>
-                                                            {result.extra.severity === "ERROR" ? "Critical" : result.extra.severity === "WARNING" ? "High" : "Medium"}
-                                                        </span>
-                                                        <span className="text-[13px] font-medium text-slate">
-                                                            {result.extra.metadata.vulnerability_class?.[0] || "General Security"}
-                                                        </span>
-                                                    </div>
-                                                    <h3 className="text-[19px] font-semibold text-miro-blue mb-2 leading-snug group-hover:text-zinc-700 transition-colors">
-                                                        {result.extra.message.length > 80 ? result.extra.message.slice(0, 80) + "..." : result.extra.message}
-                                                    </h3>
-                                                    <div className="flex items-center gap-4 text-[13px] text-slate opacity-60">
-                                                        <span className="flex items-center gap-1.5 font-mono">
-                                                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                                            </svg>
-                                                            {result.path}
-                                                        </span>
-                                                        <span className="flex items-center gap-1.5">
-                                                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16" />
-                                                            </svg>
-                                                            L{result.start.line}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div className="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-miro-blue opacity-0 group-hover:opacity-100 transition-all">
-                                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                                    </svg>
-                                                </div>
-                                            </div>
+                        return (
+                        <div
+                            key={index}
+                            className="block cursor-pointer"
+                            onClick={() => {
+                                setSelectedResult(result)
+                                router.push(`/report/${originalIndex}`)
+                            }}
+                        >
+                            <div className="bg-white rounded-[24px] border border-hairline p-6 transition-all hover:border-miro-blue/20 hover:shadow-[0_8px_20px_-4px_rgba(5,0,56,0.06)] hover:translate-y-[-2px] group">
+                                <div className="flex items-start justify-between gap-6">
+                                    <div className="flex-1">
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${isCritical ? 'bg-miro-coral-light text-miro-coral-dark' :
+                                                isHigh ? 'bg-miro-yellow-light text-miro-yellow-dark' :
+                                                    'bg-miro-teal-light text-miro-teal-dark'
+                                                }`}>
+                                                {result.extra.severity === "ERROR" ? "Critical" : result.extra.severity === "WARNING" ? "High" : "Medium"}
+                                            </span>
+                                            <span className="text-[13px] font-medium text-slate">
+                                                {vulnInfo.title}
+                                            </span>
+                                        </div>
+                                        <h3 className="text-[19px] font-semibold text-miro-blue mb-2 leading-snug group-hover:text-zinc-700 transition-colors">
+                                            {vulnInfo.description.length > 60
+                                                ? vulnInfo.description.slice(0, 60) + "..."
+                                                : vulnInfo.description}
+                                        </h3>
+                                        <div className="flex items-center gap-4 text-[13px] text-slate opacity-60">
+                                            <span className="flex items-center gap-1.5 font-mono">
+                                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                </svg>
+                                                {result.path}
+                                            </span>
+                                            <span className="flex items-center gap-1.5">
+                                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16" />
+                                                </svg>
+                                                L{result.start.line}
+                                            </span>
                                         </div>
                                     </div>
-                                );
+                                    <div className="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-miro-blue opacity-0 group-hover:opacity-100 transition-all">
+                                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        );
                             })
                         ) : (
-                            <div className="bg-white rounded-[32px] border border-hairline border-dashed py-24 text-center">
-                                <p className="text-slate mb-2">해당 심각도의 분석 결과가 없습니다.</p>
-                                <button
-                                    onClick={() => setActiveFilter("전체")}
-                                    className="text-miro-blue font-semibold hover:underline"
-                                >
-                                    전체 목록 보기
-                                </button>
-                            </div>
+                        <div className="bg-white rounded-[32px] border border-hairline border-dashed py-24 text-center">
+                            <p className="text-slate mb-2">해당 심각도의 분석 결과가 없습니다.</p>
+                            <button
+                                onClick={() => setActiveFilter("전체")}
+                                className="text-miro-blue font-semibold hover:underline"
+                            >
+                                전체 목록 보기
+                            </button>
+                        </div>
                         )}
                     </main>
 
