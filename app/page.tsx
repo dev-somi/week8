@@ -5,32 +5,6 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-white text-miro-blue selection:bg-miro-yellow/30 font-sans">
 
-      {/* Navigation */}
-      <nav className="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-hairline">
-        <div className="max-w-[1280px] mx-auto px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-8">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 bg-miro-yellow rounded-sm flex items-center justify-center font-black text-sm text-miro-blue">
-                SV
-              </div>
-              <span className="text-xl font-bold tracking-tight text-miro-blue">
-                SecureVibe
-              </span>
-            </div>
-            <div className="hidden lg:flex items-center gap-6 text-[15px] font-medium text-miro-blue">
-              <Link href="#" className="hover:opacity-70 transition-opacity flex items-center gap-1">제품 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 9l-7 7-7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></Link>
-              <Link href="#" className="hover:opacity-70 transition-opacity flex items-center gap-1">솔루션 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 9l-7 7-7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></Link>
-              <Link href="#" className="hover:opacity-70 transition-opacity">요금제</Link>
-            </div>
-          </div>
-          <div className="flex items-center gap-6">
-            <Link href="#" className="text-[15px] font-medium hover:opacity-70 transition-opacity hidden sm:block">로그인</Link>
-            <button className="px-6 py-2.5 text-[14px] font-medium rounded-full bg-miro-blue text-white hover:bg-zinc-800 transition-all active:scale-95">
-              무료로 시작하기
-            </button>
-          </div>
-        </div>
-      </nav>
 
       <main className="flex-1">
         {/* Hero Section */}
