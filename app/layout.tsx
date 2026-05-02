@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Outfit } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import Navbar from "@/components/Navbar"
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,42 +39,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         {/* Navigation */}
-        <nav className="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-hairline">
-          <div className="max-w-[1280px] mx-auto px-8 h-16 flex items-center justify-between">
-            {/* Left: Logo */}
-            <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <div className="w-6 h-6 bg-miro-yellow rounded-sm flex items-center justify-center text-miro-blue">
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                  <path d="M7 11V7a5 5 0 0110 0v4"></path>
-                </svg>
-              </div>
-              <span className="text-lg font-bold tracking-tight text-miro-blue">
-                SecureVibe
-              </span>
-            </Link>
-
-            {/* Center: Main Links */}
-            <div className="flex items-center gap-6 text-[15px] font-medium text-miro-blue">
-              <Link href="/" className="hover:opacity-70 transition-opacity">Scan</Link>
-              <span className="opacity-20">|</span>
-              <Link href="/report" className="hover:opacity-70 transition-opacity">Report</Link>
-            </div>
-
-            {/* Right: Actions */}
-            <div className="flex items-center gap-4">
-              <button className="p-2 rounded-full hover:bg-zinc-100 transition-colors" title="설정">
-                <svg className="w-5 h-5 text-miro-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              </button>
-              <div className="w-8 h-8 rounded-full bg-miro-blue text-white flex items-center justify-center text-xs font-bold" title="프로필">
-                JD
-              </div>
-            </div>
-          </div>
-        </nav>
+        <Navbar />
 
         {children}
       </body>
