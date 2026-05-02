@@ -2,18 +2,27 @@
 
 import { useScanStore } from "@/store/scanStore"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 
 
 export default function ReportPage() {
     const results = useScanStore((state) => state.results)
     const setSelectedResult = useScanStore((state) => state.setSelectedResult)
+    const [activeFilter, setActiveFilter] = useState("전체")
 
     const router = useRouter()
     const critical = results.filter(r => r.extra.severity === "ERROR")
     const high = results.filter(r => r.extra.severity === "WARNING")
     const medium = results.filter(r => r.extra.severity === "INFO")
+
+    const filteredResults = results.filter(r => {
+        if (activeFilter === "전체") return true;
+        if (activeFilter === "Critical") return r.extra.severity === "ERROR";
+        if (activeFilter === "High") return r.extra.severity === "WARNING";
+        if (activeFilter === "Medium") return r.extra.severity === "INFO";
+        return true;
+    })
 
     useEffect(() => {
         if (results.length === 0) {
@@ -43,8 +52,12 @@ export default function ReportPage() {
                                     { label: "High", count: high.length, color: "bg-miro-yellow-light text-miro-yellow-dark" },
                                     { label: "Medium", count: medium.length, color: "bg-miro-teal-light text-miro-teal-dark" }
                                 ].map((item, i) => (
-                                    <li key={i} className="group cursor-pointer">
-                                        <div className={`flex items-center justify-between p-3 rounded-xl transition-all hover:bg-zinc-50 ${i === 0 ? 'bg-zinc-50 font-semibold' : ''}`}>
+                                    <li 
+                                        key={i} 
+                                        className="group cursor-pointer"
+                                        onClick={() => setActiveFilter(item.label)}
+                                    >
+                                        <div className={`flex items-center justify-between p-3 rounded-xl transition-all hover:bg-zinc-50 ${activeFilter === item.label ? 'bg-zinc-50 font-semibold ring-1 ring-zinc-200' : ''}`}>
                                             <span className="text-[15px] text-miro-blue">{item.label}</span>
                                             <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${item.color}`}>
                                                 {item.count}
@@ -65,10 +78,13 @@ export default function ReportPage() {
 
                     {/* 오른쪽 메인: 이슈 카드 리스트 */}
                     <main className="flex-1 space-y-4 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                        {results.length > 0 ? (
-                            results.map((result, index) => {
+                        {filteredResults.length > 0 ? (
+                            filteredResults.map((result, index) => {
                                 const isCritical = result.extra.severity === "ERROR";
                                 const isHigh = result.extra.severity === "WARNING";
+
+                                // 원본 results 배열에서의 인덱스를 찾아 상세 페이지 이동에 사용
+                                const originalIndex = results.findIndex(r => r === result);
 
                                 return (
                                     <div
@@ -76,7 +92,7 @@ export default function ReportPage() {
                                         className="block cursor-pointer"
                                         onClick={() => {
                                             setSelectedResult(result)
-                                            router.push(`/report/${index}`)
+                                            router.push(`/report/${originalIndex}`)
                                         }}
                                     >
                                         <div className="bg-white rounded-[24px] border border-hairline p-6 transition-all hover:border-miro-blue/20 hover:shadow-[0_8px_20px_-4px_rgba(5,0,56,0.06)] hover:translate-y-[-2px] group">
@@ -123,8 +139,13 @@ export default function ReportPage() {
                             })
                         ) : (
                             <div className="bg-white rounded-[32px] border border-hairline border-dashed py-24 text-center">
-                                <p className="text-slate mb-2">분석 결과가 없습니다.</p>
-                                <Link href="/" className="text-miro-blue font-semibold hover:underline">새로운 스캔 시작하기</Link>
+                                <p className="text-slate mb-2">해당 심각도의 분석 결과가 없습니다.</p>
+                                <button 
+                                    onClick={() => setActiveFilter("전체")}
+                                    className="text-miro-blue font-semibold hover:underline"
+                                >
+                                    전체 목록 보기
+                                </button>
                             </div>
                         )}
                     </main>
