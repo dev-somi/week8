@@ -5,7 +5,6 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-white text-miro-blue selection:bg-miro-yellow/30 font-sans">
 
-
       <main className="flex-1">
         <section className="py-[120px] px-8 overflow-hidden bg-white">
           <div className="max-w-[1280px] mx-auto text-center">
@@ -15,92 +14,78 @@ export default function Home() {
                 <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" />
               </svg>
             </h2>
+
             <p className="text-[18px] md:text-[20px] text-slate mb-16 max-w-xl mx-auto">
               저장소 주소를 붙여넣거나 파일을 드래그하여 <br className="hidden sm:block" />
               취약점을 즉시 찾아낼 수 있습니다.
             </p>
 
-            <div className="grid md:grid-cols-2 gap-8 items-stretch mb-12">
-              {/* 왼쪽: 파일 드래그앤드롭 (Miro Yellow Pastel) */}
-              <div className="bg-miro-yellow-light p-10 rounded-[28px] border border-miro-yellow/20 flex flex-col items-center justify-center min-h-[320px] transition-all hover:translate-y-[-4px]">
-                <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6 text-miro-yellow-dark">
-                  <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="17 8 12 3 7 8" />
-                    <line x1="12" y1="3" x2="12" y2="15" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-semibold mb-2">파일 업로드</h3>
-                <p className="text-miro-yellow-dark/70 text-sm mb-8">.zip · 폴더 · 단일 파일 지원</p>
+            {/* Whiteboard Frame Wrapper */}
+            <div className="relative max-w-6xl mx-auto rounded-[32px] border border-hairline shadow-[0_24px_64px_-12px_rgba(5,0,56,0.12)] bg-zinc-50 p-6 overflow-hidden animate-fade-in">
+              <div className="bg-white rounded-[24px] py-20 px-8 md:px-16 text-center">
 
-                <input type="file" id="file-upload" className="hidden" />
-                <label
-                  htmlFor="file-upload"
-                  className="px-8 py-3 bg-miro-blue text-white rounded-full font-medium text-sm cursor-pointer hover:bg-zinc-800 transition-all active:scale-95"
-                >
-                  파일 찾아보기
-                </label>
-              </div>
+                <div className="grid md:grid-cols-2 gap-8 items-stretch mb-12">
+                  {/* 왼쪽: 파일 드래그앤드롭 (Miro Yellow Pastel) */}
+                  <div className="bg-miro-yellow-light p-10 rounded-[28px] border border-miro-yellow/20 flex flex-col items-center justify-center min-h-[320px] transition-all hover:translate-y-[-4px]">
+                    <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6 text-miro-yellow-dark">
+                      <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-semibold mb-2">파일 업로드</h3>
+                    <p className="text-miro-yellow-dark/70 text-sm mb-8">.zip · 폴더 · 단일 파일 지원</p>
 
-              {/* 오른쪽: GitHub URL (Miro Teal Pastel) */}
-              <div className="bg-miro-teal-light p-10 rounded-[28px] border border-miro-teal-light/50 flex flex-col items-center justify-center min-h-[320px] transition-all hover:translate-y-[-4px]">
-                <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6 text-miro-teal-dark">
-                  <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-semibold mb-2">GitHub 저장소</h3>
-                <p className="text-miro-teal-dark/70 text-sm mb-8">공개 저장소 즉시 분석 가능</p>
+                    <input type="file" id="file-upload" className="hidden" />
+                    <label
+                      htmlFor="file-upload"
+                      className="px-8 py-3 bg-miro-blue text-white rounded-full font-medium text-sm cursor-pointer hover:bg-zinc-800 transition-all active:scale-95"
+                    >
+                      파일 찾아보기
+                    </label>
+                  </div>
 
-                <div className="w-full max-w-sm flex flex-col gap-3">
-                  <input
-                    type="text"
-                    placeholder="https://github.com/org/repo"
-                    className="w-full px-5 py-3 rounded-xl border border-hairline bg-white text-miro-blue text-sm focus:outline-none focus:ring-2 focus:ring-miro-blue/10"
-                  />
-                  <button type="button" className="w-full py-3 bg-miro-blue text-white rounded-full font-medium text-sm hover:bg-zinc-800 transition-all active:scale-95">
-                    분석 시작하기 →
-                  </button>
-                </div>
-              </div>
-            </div>
+                  {/* 오른쪽: GitHub URL (Miro Teal Pastel) */}
+                  <div className="bg-miro-teal-light p-10 rounded-[28px] border border-miro-teal-light/50 flex flex-col items-center justify-center min-h-[320px] transition-all hover:translate-y-[-4px]">
+                    <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6 text-miro-teal-dark">
+                      <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-semibold mb-2">GitHub 저장소</h3>
+                    <p className="text-miro-teal-dark/70 text-sm mb-8">공개 저장소 즉시 분석 가능</p>
 
-            <div className="flex items-center justify-center gap-6 text-stone text-xs font-medium">
-              <span className="flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                  <path d="M7 11V7a5 5 0 0110 0v4"></path>
-                </svg>
-                코드는 외부로 유출되지 않습니다
-              </span>
-              <span className="opacity-30">·</span>
-              <span className="flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-                분석 소요 시간: 30-60초
-              </span>
-            </div>
+                    <div className="w-full max-w-sm flex flex-col gap-3">
+                      <input
+                        type="text"
+                        placeholder="https://github.com/org/repo"
+                        className="w-full px-5 py-3 rounded-xl border border-hairline bg-white text-miro-blue text-sm focus:outline-none focus:ring-2 focus:ring-miro-blue/10"
+                      />
+                      <button type="button" className="w-full py-3 bg-miro-blue text-white rounded-full font-medium text-sm hover:bg-zinc-800 transition-all active:scale-95">
+                        분석 시작하기 →
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
-
-            {/* Whiteboard Mockup Visualization */}
-            <div className="relative max-w-5xl mx-auto rounded-xl border border-hairline shadow-[0_12px_32px_-4px_rgba(5,0,56,0.08)] bg-zinc-50 p-4 overflow-hidden animate-fade-in">
-              <div className="aspect-[16/9] bg-white rounded-lg flex items-center justify-center relative overflow-hidden">
-                {/* Visual elements representing Miro-board-like interface for security */}
-                <div className="absolute top-10 left-10 w-48 p-4 bg-miro-yellow-light rounded-xl border border-miro-yellow/20 shadow-sm text-left">
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-miro-yellow-dark mb-2">심각한 발견 사항</div>
-                  <div className="text-sm font-semibold">/api/v1/user 내 SQL 인젝션</div>
+                <div className="flex items-center justify-center gap-6 text-stone text-xs font-medium">
+                  <span className="flex items-center gap-1.5">
+                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                      <path d="M7 11V7a5 5 0 0110 0v4"></path>
+                    </svg>
+                    코드는 외부로 유출되지 않습니다
+                  </span>
+                  <span className="opacity-30">·</span>
+                  <span className="flex items-center gap-1.5">
+                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    분석 소요 시간: 30-60초
+                  </span>
                 </div>
-                <div className="absolute top-32 right-20 w-56 p-4 bg-miro-coral-light rounded-xl border border-miro-coral-light shadow-sm text-left">
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-miro-coral-dark mb-2">보안 부채</div>
-                  <div className="text-sm font-semibold">dev 브랜치에서 32개의 하드코딩된 시크릿 발견</div>
-                </div>
-                <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-64 p-4 bg-miro-teal-light rounded-xl border border-miro-teal-light shadow-sm text-left">
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-miro-teal-dark mb-2">보안 AI 가이드</div>
-                  <div className="text-sm font-semibold italic">"매개변수화된 쿼리를 사용하도록 입력 유효성 검사를 업데이트하는 중..."</div>
-                </div>
-                <div className="text-miro-blue opacity-10 font-bold text-4xl">SecureVibe 비주얼 캔버스</div>
               </div>
             </div>
           </div>
