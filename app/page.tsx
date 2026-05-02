@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { scanFile } from '@/services/scan'
+import { scanFile, scanUrl } from '@/services/scan'
 import { useScanStore } from "@/store/scanStore"
 
 
@@ -14,6 +14,7 @@ export default function Home() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const setResults = useScanStore((state) => state.setResults)
+  const [githubUrl, setGithubUrl] = useState("")
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -30,6 +31,18 @@ export default function Home() {
     setResults(res.data)
     router.push("/report")
 
+  }
+
+  const handleUrlScan = async () => {
+    if (!githubUrl.trim()) return
+
+    setIsLoading(true)
+    const res = await scanUrl(githubUrl)
+    setIsLoading(false)
+
+    console.log(res.data)
+    setResults(res.data)
+    router.push("/report")
   }
 
   return (
@@ -89,11 +102,19 @@ export default function Home() {
                     <div className="w-full max-w-sm flex flex-col gap-3">
                       <input
                         type="text"
+                        value={githubUrl}
+                        onChange={(e) => setGithubUrl(e.target.value)}
                         placeholder="https://github.com/org/repo"
                         className="w-full px-5 py-3 rounded-xl border border-hairline bg-white text-miro-blue text-sm focus:outline-none focus:ring-2 focus:ring-miro-blue/10"
+                        disabled={isLoading}
                       />
-                      <button type="button" className="w-full py-3 bg-miro-blue text-white rounded-full font-medium text-sm hover:bg-zinc-800 transition-all active:scale-95">
-                        분석 시작하기 →
+                      <button 
+                        type="button" 
+                        onClick={handleUrlScan}
+                        disabled={isLoading || !githubUrl.trim()}
+                        className="w-full py-3 bg-miro-blue text-white rounded-full font-medium text-sm hover:bg-zinc-800 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {isLoading ? "분석 중..." : "분석 시작하기 →"}
                       </button>
                     </div>
                   </div>
