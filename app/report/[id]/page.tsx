@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import Link from "next/link"
 import { getVulnerabilityInfo } from "@/lib/constants/severityMapping"
+import ChatBot from "@/components/ChatBot"
 
 export default function IssueDetailPage() {
     const router = useRouter()
@@ -47,8 +48,8 @@ export default function IssueDetailPage() {
                             <div className="space-y-4">
                                 <div className="flex items-center gap-3">
                                     <span className={`text-[12px] font-bold px-3 py-1 rounded-full uppercase tracking-wider ${vulnInfo.severity === 'critical' ? 'bg-miro-coral-light text-miro-coral-dark' :
-                                            vulnInfo.severity === 'high' ? 'bg-miro-yellow-light text-miro-yellow-dark' :
-                                                'bg-miro-teal-light text-miro-teal-dark'
+                                        vulnInfo.severity === 'high' ? 'bg-miro-yellow-light text-miro-yellow-dark' :
+                                            'bg-miro-teal-light text-miro-teal-dark'
                                         }`}>
                                         {vulnInfo.severity.toUpperCase()}
                                     </span>
@@ -86,8 +87,8 @@ export default function IssueDetailPage() {
                             </div>
                         </div>
                         <div className={`absolute top-0 right-0 w-64 h-64 blur-[100px] opacity-10 -translate-y-1/2 translate-x-1/2 rounded-full ${vulnInfo.severity === 'critical' ? 'bg-miro-coral' :
-                                vulnInfo.severity === 'high' ? 'bg-miro-yellow' :
-                                    'bg-miro-teal'
+                            vulnInfo.severity === 'high' ? 'bg-miro-yellow' :
+                                'bg-miro-teal'
                             }`} />
                     </section>
 
@@ -185,6 +186,8 @@ export default function IssueDetailPage() {
                     </div>
                 </div>
             </div>
+            <ChatBot context={`${vulnInfo.title}: ${vulnInfo.description}`} />
         </div>
+
     )
 }
