@@ -166,21 +166,13 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-center gap-6 text-stone text-xs font-medium">
-                  <span className="flex items-center gap-1.5">
-                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <div className="flex items-center justify-center text-miro-blue/40 text-base font-bold tracking-tight">
+                  <span className="flex items-center gap-2">
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                       <path d="M7 11V7a5 5 0 0110 0v4"></path>
                     </svg>
-                    코드는 외부로 유출되지 않습니다
-                  </span>
-                  <span className="opacity-30">·</span>
-                  <span className="flex items-center gap-1.5">
-                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                    분석 소요 시간: 30-60초
+                    코드는 안전하게 암호화되어 외부로 유출되지 않습니다
                   </span>
                 </div>
               </div>
@@ -189,7 +181,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* Massive Dark Footer */}
+      {/* Massive Dark Footer
       <footer className="bg-miro-blue text-white py-20 px-8">
         <div className="max-w-[1280px] mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-12 mb-20">
@@ -239,7 +231,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 }
