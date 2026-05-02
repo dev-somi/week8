@@ -8,6 +8,7 @@ import Link from "next/link"
 
 export default function ReportPage() {
     const results = useScanStore((state) => state.results)
+    const setSelectedResult = useScanStore((state) => state.setSelectedResult)
 
     const router = useRouter()
     const critical = results.filter(r => r.extra.severity === "ERROR")
@@ -70,7 +71,14 @@ export default function ReportPage() {
                                 const isHigh = result.extra.severity === "WARNING";
 
                                 return (
-                                    <Link href={`/report/${index}`} key={index} className="block">
+                                    <div
+                                        key={index}
+                                        className="block cursor-pointer"
+                                        onClick={() => {
+                                            setSelectedResult(result)
+                                            router.push(`/report/${index}`)
+                                        }}
+                                    >
                                         <div className="bg-white rounded-[24px] border border-hairline p-6 transition-all hover:border-miro-blue/20 hover:shadow-[0_8px_20px_-4px_rgba(5,0,56,0.06)] hover:translate-y-[-2px] group">
                                             <div className="flex items-start justify-between gap-6">
                                                 <div className="flex-1">
@@ -110,7 +118,7 @@ export default function ReportPage() {
                                                 </div>
                                             </div>
                                         </div>
-                                    </Link>
+                                    </div>
                                 );
                             })
                         ) : (

@@ -31,11 +31,15 @@ interface ScanResult {
 interface ScanStore {
     results: ScanResult[]
     setResults: (results: ScanResult[]) => void
+    selectedResult: ScanResult | null        // ← 추가
+    setSelectedResult: (result: ScanResult) => void  // ← 추가
 }
 
 export const useScanStore = create<ScanStore>((set) => ({
     results: [],
     setResults: (results) => set({ results }),
+    selectedResult: null,                    // ← 추가
+    setSelectedResult: (result) => set({ selectedResult: result }), // ← 추가
 }))
 
 /*
