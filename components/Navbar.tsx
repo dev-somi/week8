@@ -5,6 +5,7 @@ import { useAuthStore } from "@/store/authStore"
 
 export default function Navbar() {
     const user = useAuthStore((state) => state.user)
+    const clearUser = useAuthStore((state) => state.clearUser)
 
     return (
         <nav className="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-hairline">
@@ -36,15 +37,19 @@ export default function Navbar() {
                     </button>
 
                     {user ? (
-                        // 로그인 된 상태
-                        <div className="w-8 h-8 rounded-full bg-miro-blue text-white flex items-center justify-center text-xs font-bold">
-                            {user.name.slice(0, 2).toUpperCase()}
+                        <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-full bg-miro-blue text-white flex items-center justify-center text-xs font-bold">
+                                {user.name.slice(0, 2).toUpperCase()}
+                            </div>
+                            <button
+                                onClick={() => clearUser()}
+                                className="text-sm text-slate hover:opacity-70"
+                            >
+                                로그아웃
+                            </button>
                         </div>
                     ) : (
-                        // 로그인 안 된 상태
-                        <Link href="/login" className="px-4 py-2 bg-miro-blue text-white rounded-full text-sm font-medium hover:bg-zinc-800 transition-all">
-                            로그인
-                        </Link>
+                        <Link href="/login">로그인</Link>
                     )}
                 </div>
             </div>
