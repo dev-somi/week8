@@ -42,7 +42,27 @@ export default function ReportPage() {
                 <div className="flex gap-10 items-start">
 
                     {/* 왼쪽 사이드바: 필터 및 요약 */}
-                    <aside className="w-[260px] sticky top-24 space-y-8 animate-fade-in">
+                    <aside className="w-[260px] sticky top-24 space-y-6 animate-fade-in">
+                        {/* 보안 상태 요약 - 강렬한 디자인 */}
+                        <div style={{
+                            backgroundColor: critical.length > 0 ? '#DC2626' :
+                                high.length > 0 ? 'var(--miro-yellow)' :
+                                    'var(--miro-teal)',
+                        }} className="rounded-[28px] p-7 shadow-xl">
+                            <div className={`text-[12px] font-extrabold uppercase tracking-[0.2em] mb-2 ${critical.length > 0 || (results.length > 0 && high.length === 0) ? 'text-white/70' : 'text-miro-blue/50'
+                                }`}>
+                                {critical.length > 0 ? 'Caution' : high.length > 0 ? 'Warning' : 'Safe'}
+                            </div>
+                            <div className="text-[24px] font-black flex items-center gap-2 tracking-tight">
+                                {critical.length > 0 ? '🚫 배포 금지' : high.length > 0 ? '⚠️ 주의 필요' : '✅ 안전'}
+                            </div>
+                            {critical.length > 0 && (
+                                <div className="mt-3 text-[13px] font-medium text-white/90 leading-tight">
+                                    심각한 취약점이 발견되었습니다. 즉시 수정이 필요합니다.
+                                </div>
+                            )}
+                        </div>
+
                         <div className="bg-white rounded-[24px] border border-hairline p-6 shadow-sm">
                             <h3 className="text-[13px] font-bold uppercase tracking-wider text-miro-blue/40 mb-6">심각도 필터</h3>
                             <ul className="space-y-2">
@@ -52,8 +72,8 @@ export default function ReportPage() {
                                     { label: "High", count: high.length, color: "bg-miro-yellow-light text-miro-yellow-dark" },
                                     { label: "Medium", count: medium.length, color: "bg-miro-teal-light text-miro-teal-dark" }
                                 ].map((item, i) => (
-                                    <li 
-                                        key={i} 
+                                    <li
+                                        key={i}
                                         className="group cursor-pointer"
                                         onClick={() => setActiveFilter(item.label)}
                                     >
@@ -140,7 +160,7 @@ export default function ReportPage() {
                         ) : (
                             <div className="bg-white rounded-[32px] border border-hairline border-dashed py-24 text-center">
                                 <p className="text-slate mb-2">해당 심각도의 분석 결과가 없습니다.</p>
-                                <button 
+                                <button
                                     onClick={() => setActiveFilter("전체")}
                                     className="text-miro-blue font-semibold hover:underline"
                                 >
