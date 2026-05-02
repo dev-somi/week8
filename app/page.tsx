@@ -7,21 +7,82 @@ export default function Home() {
 
 
       <main className="flex-1">
-        {/* Hero Section */}
         <section className="py-[120px] px-8 overflow-hidden bg-white">
           <div className="max-w-[1280px] mx-auto text-center">
-            <h1 className="text-[56px] md:text-[80px] font-medium leading-[1.05] tracking-[-0.025em] mb-8 text-miro-blue">
-              AI가 주도하는 <br />
-              <span className="relative inline-block">
-                보안 워크스페이스
-                <svg className="absolute -bottom-2 left-0 w-full h-3 text-miro-yellow" viewBox="0 0 100 10" preserveAspectRatio="none">
-                  <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" />
-                </svg>
-              </span>
-            </h1>
-            <p className="text-[18px] md:text-[20px] text-slate mb-10 max-w-2xl mx-auto leading-[1.5]">
-              SecureVibe는 보안 팀이 취약점을 시각화하고, AI로 코드를 스캔하며, 그 어느 때보다 빠르게 문제를 해결할 수 있도록 돕습니다.
+            <h2 className="text-[48px] md:text-[64px] font-medium leading-[1.1] mb-4 text-miro-blue tracking-tight relative inline-block">
+              코드를 점검해 보세요.
+              <svg className="absolute -bottom-2 left-0 w-full h-3 text-miro-yellow" viewBox="0 0 100 10" preserveAspectRatio="none">
+                <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" />
+              </svg>
+            </h2>
+            <p className="text-[18px] md:text-[20px] text-slate mb-16 max-w-xl mx-auto">
+              저장소 주소를 붙여넣거나 파일을 드래그하여 <br className="hidden sm:block" />
+              취약점을 즉시 찾아낼 수 있습니다.
             </p>
+
+            <div className="grid md:grid-cols-2 gap-8 items-stretch mb-12">
+              {/* 왼쪽: 파일 드래그앤드롭 (Miro Yellow Pastel) */}
+              <div className="bg-miro-yellow-light p-10 rounded-[28px] border border-miro-yellow/20 flex flex-col items-center justify-center min-h-[320px] transition-all hover:translate-y-[-4px]">
+                <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6 text-miro-yellow-dark">
+                  <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="17 8 12 3 7 8" />
+                    <line x1="12" y1="3" x2="12" y2="15" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-semibold mb-2">파일 업로드</h3>
+                <p className="text-miro-yellow-dark/70 text-sm mb-8">.zip · 폴더 · 단일 파일 지원</p>
+
+                <input type="file" id="file-upload" className="hidden" />
+                <label
+                  htmlFor="file-upload"
+                  className="px-8 py-3 bg-miro-blue text-white rounded-full font-medium text-sm cursor-pointer hover:bg-zinc-800 transition-all active:scale-95"
+                >
+                  파일 찾아보기
+                </label>
+              </div>
+
+              {/* 오른쪽: GitHub URL (Miro Teal Pastel) */}
+              <div className="bg-miro-teal-light p-10 rounded-[28px] border border-miro-teal-light/50 flex flex-col items-center justify-center min-h-[320px] transition-all hover:translate-y-[-4px]">
+                <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6 text-miro-teal-dark">
+                  <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-semibold mb-2">GitHub 저장소</h3>
+                <p className="text-miro-teal-dark/70 text-sm mb-8">공개 저장소 즉시 분석 가능</p>
+
+                <div className="w-full max-w-sm flex flex-col gap-3">
+                  <input
+                    type="text"
+                    placeholder="https://github.com/org/repo"
+                    className="w-full px-5 py-3 rounded-xl border border-hairline bg-white text-miro-blue text-sm focus:outline-none focus:ring-2 focus:ring-miro-blue/10"
+                  />
+                  <button type="button" className="w-full py-3 bg-miro-blue text-white rounded-full font-medium text-sm hover:bg-zinc-800 transition-all active:scale-95">
+                    분석 시작하기 →
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center gap-6 text-stone text-xs font-medium">
+              <span className="flex items-center gap-1.5">
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0110 0v4"></path>
+                </svg>
+                코드는 외부로 유출되지 않습니다
+              </span>
+              <span className="opacity-30">·</span>
+              <span className="flex items-center gap-1.5">
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                분석 소요 시간: 30-60초
+              </span>
+            </div>
+
 
             {/* Whiteboard Mockup Visualization */}
             <div className="relative max-w-5xl mx-auto rounded-xl border border-hairline shadow-[0_12px_32px_-4px_rgba(5,0,56,0.08)] bg-zinc-50 p-4 overflow-hidden animate-fade-in">
