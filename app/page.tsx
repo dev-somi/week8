@@ -1,7 +1,32 @@
+"use client"  // ← 맨 위에 꼭!
+
 import Image from "next/image";
 import Link from "next/link";
 
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { scanFile } from '@/services/scan'
+
+
 export default function Home() {
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    const formData = new FormData()
+    formData.append("code_file", file)
+
+    setIsLoading(true)
+    const res = await scanFile(formData)
+    setIsLoading(false)
+
+    // 결과를 가지고 report 페이지로 이동
+    router.push("/report")
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-white text-miro-blue selection:bg-miro-yellow/30 font-sans">
 
@@ -37,7 +62,7 @@ export default function Home() {
                     <h3 className="text-2xl font-semibold mb-2">파일 업로드</h3>
                     <p className="text-miro-yellow-dark/70 text-sm mb-8">.zip · 폴더 · 단일 파일 지원</p>
 
-                    <input type="file" id="file-upload" className="hidden" />
+                    <input type="file" id="file-upload" className="hidden" onChange={handleFileChange} disabled={isLoading} />
                     <label
                       htmlFor="file-upload"
                       className="px-8 py-3 bg-miro-blue text-white rounded-full font-medium text-sm cursor-pointer hover:bg-zinc-800 transition-all active:scale-95"
