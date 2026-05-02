@@ -39,7 +39,7 @@ export default function Home() {
         <section className="py-[120px] px-8 overflow-hidden bg-white">
           <div className="max-w-[1280px] mx-auto text-center">
             <h2 className="text-[48px] md:text-[64px] font-medium leading-[1.1] mb-4 text-miro-blue tracking-tight relative inline-block">
-              코드를 점검해 보세요.
+              코드를 점검해 보세요
               <svg className="absolute -bottom-2 left-0 w-full h-3 text-miro-yellow" viewBox="0 0 100 10" preserveAspectRatio="none">
                 <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" />
               </svg>
