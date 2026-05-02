@@ -6,11 +6,14 @@ import Link from "next/link";
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { scanFile } from '@/services/scan'
+import { useScanStore } from "@/store/scanStore"
+
 
 
 export default function Home() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const setResults = useScanStore((state) => state.setResults)
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -23,8 +26,10 @@ export default function Home() {
     const res = await scanFile(formData)
     setIsLoading(false)
 
-    // 결과를 가지고 report 페이지로 이동
+    console.log(res.data)
+    setResults(res.data)
     router.push("/report")
+
   }
 
   return (
