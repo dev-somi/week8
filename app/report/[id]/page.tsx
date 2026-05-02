@@ -28,11 +28,11 @@ export default function IssueDetailPage() {
     return (
         <div className="min-h-screen bg-zinc-50/50 flex flex-col font-sans">
             <div className="max-w-[1440px] mx-auto w-full px-8 py-12 flex-1">
-                
+
                 <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
                     {/* 돌아가기 링크 */}
-                    <Link 
-                        href="/report" 
+                    <Link
+                        href="/report"
                         className="inline-flex items-center gap-2 text-[15px] font-semibold text-miro-blue/60 hover:text-miro-blue transition-colors group"
                     >
                         <svg className="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -46,11 +46,10 @@ export default function IssueDetailPage() {
                         <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                             <div className="space-y-4">
                                 <div className="flex items-center gap-3">
-                                    <span className={`text-[12px] font-bold px-3 py-1 rounded-full uppercase tracking-wider ${
-                                        vulnInfo.severity === 'critical' ? 'bg-miro-coral-light text-miro-coral-dark' : 
-                                        vulnInfo.severity === 'high' ? 'bg-miro-yellow-light text-miro-yellow-dark' : 
-                                        'bg-miro-teal-light text-miro-teal-dark'
-                                    }`}>
+                                    <span className={`text-[12px] font-bold px-3 py-1 rounded-full uppercase tracking-wider ${vulnInfo.severity === 'critical' ? 'bg-miro-coral-light text-miro-coral-dark' :
+                                            vulnInfo.severity === 'high' ? 'bg-miro-yellow-light text-miro-yellow-dark' :
+                                                'bg-miro-teal-light text-miro-teal-dark'
+                                        }`}>
                                         {vulnInfo.severity.toUpperCase()}
                                     </span>
                                 </div>
@@ -73,22 +72,23 @@ export default function IssueDetailPage() {
                                 </div>
                             </div>
 
-                            <div className="flex flex-col gap-3 min-w-[200px]">
-                                <div className="bg-zinc-50 rounded-2xl p-4 border border-hairline flex items-center justify-between gap-4">
-                                    <span className="text-[13px] font-semibold text-slate/60 uppercase">CWE</span>
+                            <div className="flex flex-col gap-3 min-w-[220px]">
+                                <div className="bg-zinc-50 rounded-2xl p-4 border border-hairline flex items-center gap-4">
+                                    <span className="text-[12px] font-bold text-slate/40 uppercase w-14">CWE</span>
+                                    <div className="w-[1px] h-4 bg-zinc-200" />
                                     <span className="text-[15px] font-bold text-miro-blue font-mono">{cweCode}</span>
                                 </div>
-                                <div className="bg-zinc-50 rounded-2xl p-4 border border-hairline flex items-center justify-between gap-4">
-                                    <span className="text-[13px] font-semibold text-slate/60 uppercase">OWASP</span>
+                                <div className="bg-zinc-50 rounded-2xl p-4 border border-hairline flex items-center gap-4">
+                                    <span className="text-[12px] font-bold text-slate/40 uppercase w-14">OWASP</span>
+                                    <div className="w-[1px] h-4 bg-zinc-200" />
                                     <span className="text-[15px] font-bold text-miro-blue font-mono">{vulnInfo.owasp}</span>
                                 </div>
                             </div>
                         </div>
-                        <div className={`absolute top-0 right-0 w-64 h-64 blur-[100px] opacity-10 -translate-y-1/2 translate-x-1/2 rounded-full ${
-                            vulnInfo.severity === 'critical' ? 'bg-miro-coral' : 
-                            vulnInfo.severity === 'high' ? 'bg-miro-yellow' : 
-                            'bg-miro-teal'
-                        }`} />
+                        <div className={`absolute top-0 right-0 w-64 h-64 blur-[100px] opacity-10 -translate-y-1/2 translate-x-1/2 rounded-full ${vulnInfo.severity === 'critical' ? 'bg-miro-coral' :
+                                vulnInfo.severity === 'high' ? 'bg-miro-yellow' :
+                                    'bg-miro-teal'
+                            }`} />
                     </section>
 
                     {/* 본문 영역 */}
