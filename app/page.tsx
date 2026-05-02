@@ -15,6 +15,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
   const setResults = useScanStore((state) => state.setResults)
   const [githubUrl, setGithubUrl] = useState("")
+  const [loadingStep, setLoadingStep] = useState(0)
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -24,31 +25,76 @@ export default function Home() {
     formData.append("code_file", file)
 
     setIsLoading(true)
+    setLoadingStep(1)  // 파일 업로드 중
+
+    setTimeout(() => setLoadingStep(2), 1000)  // 1초 후 분석 중
+
     const res = await scanFile(formData)
-    setIsLoading(false)
+    setLoadingStep(3)  // 완료
 
-    console.log(res.data)
-    setResults(res.data)
-    router.push("/report")
-
+    setTimeout(() => {
+      setIsLoading(false)
+      setResults(res.data)
+      router.push("/report")
+    }, 500)
   }
 
   const handleUrlScan = async () => {
     if (!githubUrl.trim()) return
 
     setIsLoading(true)
-    const res = await scanUrl(githubUrl)
-    setIsLoading(false)
+    setLoadingStep(1) // 저장소 확인 중
 
-    console.log(res.data)
-    setResults(res.data)
-    router.push("/report")
+    // 분석 중임을 보여주기 위한 자연스러운 지연
+    setTimeout(() => setLoadingStep(2), 1000)
+
+    const res = await scanUrl(githubUrl)
+    setLoadingStep(3) // 분석 완료
+
+    setTimeout(() => {
+      setIsLoading(false)
+      setResults(res.data)
+      router.push("/report")
+    }, 500)
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-white text-miro-blue selection:bg-miro-yellow/30 font-sans">
+    <div className="flex flex-col min-h-screen bg-white text-miro-blue selection:bg-miro-yellow/30 font-sans relative">
 
-      <main className="flex-1">
+      {/* 전체 화면 로딩 오버레이 */}
+      {isLoading && (
+        <div className="fixed inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-50 pointer-events-none">
+          <div className="pointer-events-auto bg-white rounded-[32px] shadow-[0_20px_60px_-10px_rgba(5,0,56,0.15)] p-10 flex flex-col gap-6 min-w-[360px] border border-hairline animate-fade-in">
+            <div className="flex items-center justify-between">
+              <h3 className="font-bold text-miro-blue text-xl tracking-tight">보안 분석 진행 중</h3>
+              <div className="w-6 h-6 border-3 border-miro-blue/10 border-t-miro-blue rounded-full animate-spin" />
+            </div>
+
+            <div className="space-y-4">
+              <div className={`flex items-center gap-4 text-[15px] font-medium transition-all ${loadingStep >= 1 ? 'text-miro-blue' : 'text-zinc-300'}`}>
+                <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-zinc-50 border border-hairline">
+                  {loadingStep >= 2 ? '✅' : '1'}
+                </span>
+                파일 및 데이터 업로드
+              </div>
+              <div className={`flex items-center gap-4 text-[15px] font-medium transition-all ${loadingStep >= 2 ? 'text-miro-blue' : 'text-zinc-300'}`}>
+                <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-zinc-50 border border-hairline">
+                  {loadingStep >= 3 ? '✅' : loadingStep === 2 ? '⟳' : '2'}
+                </span>
+                취약점 데이터베이스 대조
+              </div>
+              <div className={`flex items-center gap-4 text-[15px] font-medium transition-all ${loadingStep >= 3 ? 'text-miro-blue' : 'text-zinc-300'}`}>
+                <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-zinc-50 border border-hairline">
+                  {loadingStep >= 3 ? '✅' : '3'}
+                </span>
+                보안 리포트 생성 완료
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <main className="flex-1 flex flex-col">
         <section className="py-[120px] px-8 overflow-hidden bg-white">
           <div className="max-w-[1280px] mx-auto text-center">
             <h2 className="text-[48px] md:text-[64px] font-medium leading-[1.1] mb-4 text-miro-blue tracking-tight relative inline-block">
@@ -108,8 +154,8 @@ export default function Home() {
                         className="w-full px-5 py-3 rounded-xl border border-hairline bg-white text-miro-blue text-sm focus:outline-none focus:ring-2 focus:ring-miro-blue/10"
                         disabled={isLoading}
                       />
-                      <button 
-                        type="button" 
+                      <button
+                        type="button"
                         onClick={handleUrlScan}
                         disabled={isLoading || !githubUrl.trim()}
                         className="w-full py-3 bg-miro-blue text-white rounded-full font-medium text-sm hover:bg-zinc-800 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
